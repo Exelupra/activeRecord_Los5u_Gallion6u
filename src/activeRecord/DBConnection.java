@@ -5,26 +5,28 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public static class DBConnection {
+public class DBConnection {
 
     private static DBConnection dbConnection;
-    String userName;
-    String password;
-    String serverName;
-    String portNumber;
-    String dbName;
+    private String userName;
+    private String password;
+    private String serverName;
+    private String portNumber;
+    private String dbName;
+    private Connection connect;
+    private Properties connectionProps;
     private DBConnection() throws SQLException {
         userName = "root";
         password = "";
         serverName = "localhost";
         portNumber = "3306";
         dbName = "testpersonne";
-        Properties connectionProps = new Properties();
+        connectionProps = new Properties();
         connectionProps.put("user", userName);
         connectionProps.put("password", password);
         String urlDB = "jdbc:mysql://" + serverName + ":";
         urlDB += portNumber + "/" + dbName;
-        Connection connect = DriverManager.getConnection(urlDB, connectionProps);
+        connect = DriverManager.getConnection(urlDB, connectionProps);
     }
 
     public static synchronized DBConnection getConnection() {
