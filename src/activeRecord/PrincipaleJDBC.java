@@ -8,12 +8,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+
+
 public class PrincipaleJDBC {
 
     // IL FAUT PENSER A AJOUTER MYSQLCONNECTOR AU CLASSPATH
 
     public static void main(String[] args) throws SQLException {
-
+/**
         // variables a modifier en fonction de la base
         String userName = "root";
         String password = "";
@@ -157,6 +159,11 @@ public class PrincipaleJDBC {
             stmt.executeUpdate(drop);
             System.out.println("9) Supprime table Personne");
         }
+        **/
+        Personne p =new Personne("M","p");
+        //p.findAll();
+        p.findById(-1);
+        //p.findByName("Scott");
 
     }
 
