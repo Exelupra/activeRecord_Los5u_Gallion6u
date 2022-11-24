@@ -51,6 +51,7 @@ public class Personne {
     }
 
     public void findById(int Id) throws SQLException {
+        Boolean trouve = false;
         String userName = "root";
         String password = "";
         String serverName = "localhost";
@@ -77,15 +78,18 @@ public class Personne {
         ResultSet rs = prep1.getResultSet();
         // s'il y a un resultat
         while (rs.next()) {
-
             String nom = rs.getString("nom");
             String prenom = rs.getString("prenom");
             int id = rs.getInt("id");
 
-                System.out.println("  -> (" + id + ") " + nom + ", " + prenom);
-            }
+            System.out.println("  -> (" + id + ") " + nom + ", " + prenom);
+            trouve = true;
+        }
+        if (!trouve) {
+            System.out.println("  -> Personne non trouvee");
         }
 
+    }
 
 
     public void findByName(String nom) throws SQLException {
@@ -119,6 +123,65 @@ public class Personne {
             String prenom = rs.getString("prenom");
             int id = rs.getInt("id");
             System.out.println("  -> (" + id + ") " + nomt + ", " + prenom);
+        }
+    }
+
+    public static void createTable() {
+        String userName = "root";
+        String password = "";
+        String serverName = "localhost";
+        //Attention, sous MAMP, le port est 8889
+        String portNumber = "3306";
+        String tableName = "personne";
+
+        // iL faut une base nommee testPersonne !
+        String dbName = "testpersonne";
+
+        // creation de la connection
+        Properties connectionProps = new Properties();
+        connectionProps.put("user", userName);
+        connectionProps.put("password", password);
+        String urlDB = "jdbc:mysql://" + serverName + ":";
+        urlDB += portNumber + "/" + dbName;
+        try {
+            Connection connect = DriverManager.getConnection(urlDB, connectionProps);
+            Statement stmt = connect.createStatement();
+            String sql = "CREATE TABLE Personne " +
+                    "(id INTEGER not NULL, " +
+                    " nom VARCHAR(255), " +
+                    " prenom VARCHAR(255), " +
+                    " PRIMARY KEY ( id ))";
+            stmt.executeUpdate(sql);
+            System.out.println("Table creee");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void deleteTable(){
+        String userName = "root";
+        String password = "";
+        String serverName = "localhost";
+        //Attention, sous MAMP, le port est 8889
+        String portNumber = "3306";
+        String tableName = "personne";
+
+        // iL faut une base nommee testPersonne !
+        String dbName = "testpersonne";
+
+        // creation de la connection
+        Properties connectionProps = new Properties();
+        connectionProps.put("user", userName);
+        connectionProps.put("password", password);
+        String urlDB = "jdbc:mysql://" + serverName + ":";
+        urlDB += portNumber + "/" + dbName;
+        try {
+            Connection connect = DriverManager.getConnection(urlDB, connectionProps);
+            Statement stmt = connect.createStatement();
+            String sql = "DROP TABLE Personne";
+            stmt.executeUpdate(sql);
+            System.out.println("Table supprimee");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
