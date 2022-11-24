@@ -13,7 +13,7 @@ public class DBConnection {
     private String serverName;
     private String portNumber;
     private String dbName;
-    private Connection connect;
+    private static Connection connect;
     private Properties connectionProps;
     private DBConnection() throws SQLException {
         userName = "root";
@@ -29,7 +29,8 @@ public class DBConnection {
         connect = DriverManager.getConnection(urlDB, connectionProps);
     }
 
-    public static synchronized DBConnection getConnection() {
+
+    public static synchronized Connection getConnection() {
         if (dbConnection == null) {
             try {
                 dbConnection = new DBConnection();
@@ -37,7 +38,7 @@ public class DBConnection {
                 e.printStackTrace();
             }
         }
-        return dbConnection;
+        return connect;
     }
 
     public void setNomDB(String nomDB){
