@@ -113,8 +113,7 @@ public class Personne {
         try {
             Connection connect = DBConnection.getConnection();
             Statement stmt = connect.createStatement();
-            this.id = this.getMaxId() + 1;
-            String sql = "INSERT INTO Personne (id, nom, prenom) VALUES (" + this.id + ", '" + this.nom + "', '" + this.prenom + "')";
+            String sql = "INSERT INTO Personne ( nom, prenom) VALUES ('" + this.nom + "', '" + this.prenom + "')";
             stmt.executeUpdate(sql);
             System.out.println("Personne sauvegardee");
         } catch (SQLException e) {
