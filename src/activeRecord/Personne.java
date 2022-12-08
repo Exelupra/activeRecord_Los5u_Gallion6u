@@ -10,13 +10,22 @@ public class Personne {
     String nom;
     String prenom;
 
+    /**
+     * Constructeur de la classe Personne
+     * @param nom
+     * @param prenom
+     */
     public Personne(String nom, String prenom) {
         this.nom = nom;
         this.prenom = prenom;
         this.id = -1;
     }
 
-
+    /**
+     * Retourne la liste de toutes les personnes
+     * @return List<Personne>
+     * @throws SQLException
+     */
     public static List<Personne> findAll() throws SQLException {
         Connection connect = DBConnection.getConnection();
 
@@ -40,6 +49,12 @@ public class Personne {
 
     }
 
+    /**
+     * Retourne la personne à qui appartient l'id
+     * @param Id
+     * @return Personne
+     * @throws SQLException
+     */
     public static Personne findById(int Id) throws SQLException {
         boolean trouve = false;
         Connection connect = DBConnection.getConnection();
@@ -62,7 +77,12 @@ public class Personne {
         return personne;
     }
 
-
+    /**
+     * Retourne la liste des personnes qui ont le nom passé en paramètre
+     * @param nom
+     * @return List<Personne>
+     * @throws SQLException
+     */
     public static List<Personne> findByName(String nom) throws SQLException {
         Connection connect = DBConnection.getConnection();
 
@@ -85,6 +105,9 @@ public class Personne {
         return personnes;
     }
 
+    /**
+     * crée la table Personne
+     */
     public static void createTable() {
         try {
             Connection connect = DBConnection.getConnection();
@@ -98,6 +121,9 @@ public class Personne {
         }
     }
 
+    /**
+     * Supprime la table Personne
+     */
     public static void deleteTable() {
 
         try {
@@ -111,6 +137,9 @@ public class Personne {
         }
     }
 
+    /**
+     * Insert la personne dans la base de données
+     */
     public void saveNew() {
 
         try {
@@ -126,6 +155,10 @@ public class Personne {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Met à jour la personne dans la base de données
+     */
     public void update() {
 
         try {
@@ -138,6 +171,10 @@ public class Personne {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Permet d'utiliser la methode dans les deux cas d'utilisation
+     */
     public void save() {
         if (this.id == -1) {
             this.saveNew();
@@ -146,22 +183,49 @@ public class Personne {
         }
     }
 
+    /**
+     * retourne id
+     * @return int
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * modifie le nom
+     * @param nom
+     */
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+    /**
+     * modifie le prenom
+     * @param prenom
+     */
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
+
+    /**
+     * retourne le nom
+     * @return String
+     */
     public String getNom() {
         return nom;
     }
+
+    /**
+     * retourne le prenom
+     * @return
+     */
     public String getPrenom() {
         return this.prenom;
     }
+
+    /**
+     * supprime la personne de la base de données
+     */
     public void delete() {
         try {
             Connection connect = DBConnection.getConnection();

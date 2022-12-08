@@ -16,6 +16,9 @@ public class TestPersonne {
     Personne personne1;
     Personne personne2;
 
+    /**
+     * creation de la table personne et ajout de 2 personnes
+     */
     @BeforeEach
     public void BeforeEach() {
         Personne.createTable();
@@ -25,7 +28,10 @@ public class TestPersonne {
         personne2.save();
     }
 
-
+    /**
+     * Test pour la methode save
+     * @throws SQLException
+     */
     @Test
     public void testSave() throws SQLException {
         List<Personne> personnes = Personne.findAll();
@@ -36,6 +42,9 @@ public class TestPersonne {
         assertEquals(3, personnes.size());
     }
 
+    /**
+     * Test pour la methode update
+     */
     @Test
     public void testUpdate() {
         Personne personne = new Personne("Durand", "Pierre");
@@ -48,12 +57,19 @@ public class TestPersonne {
 
     }
 
+    /**
+     * Test pour la methode delete
+     */
     @Test
     public void testDelete() {
         personne1.delete();
         assertEquals(-1, personne1.getId());
     }
 
+    /**
+     * Test pour la methode find by id
+     * @throws SQLException
+     */
     @Test
     public void testFindById() throws SQLException {
         Personne personne2 = Personne.findById(2);
@@ -61,6 +77,10 @@ public class TestPersonne {
         assertEquals("Durand", personne2.getNom());
     }
 
+    /**
+     * Test pour la methode find all
+     * @throws SQLException
+     */
     @Test
     public void testFindAll() throws SQLException {
         ;
@@ -68,12 +88,19 @@ public class TestPersonne {
         assertEquals(2, p.size());
     }
 
+    /**
+     * Test pour la methode find by name
+     * @throws SQLException
+     */
     @Test
     public void testFindlByName() throws SQLException {
         List<Personne> p = Personne.findByName("Durand");
         assertEquals(2, p.size());
     }
 
+    /**
+     * After each pour supprimer la table
+     */
     @AfterEach
     public void AfterEach() {
         Personne.deleteTable();
