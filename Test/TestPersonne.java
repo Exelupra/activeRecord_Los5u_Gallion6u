@@ -1,7 +1,8 @@
+import activeRecord.DBConnection;
 import activeRecord.Personne;
-import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -10,26 +11,29 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class TestPersonne {
-//before each pour créer la table
+//before each pour crÃ©er la table
+
+    Personne personne1;
+    Personne personne2;
+
     @BeforeEach
     public void BeforeEach() {
         Personne.createTable();
-        Personne personne1 = new Personne("Durand", "Pierre");
+        personne1 = new Personne("Durand", "Pierre");
         personne1.save();
-        Personne personne = new Personne("Durand", "PierreA");
-        personne.save();
+        personne2 = new Personne("Durand", "PierreA");
+        personne2.save();
     }
 
-    @AfterEach
-    public void AfterEach() {
-        Personne.deleteTable();
-    }
 
     @Test
     public void testSave() throws SQLException {
-        //Personne personne = new Personne("Duransd", "Pierre");
-        //personne.save();
-        //assertEquals(3, personne.getMaxId());
+        List<Personne> personnes = Personne.findAll();
+        assertEquals(2, personnes.size());
+        Personne personne = new Personne("Durand", "Pierre");
+        personne.save();
+        personnes = Personne.findAll();
+        assertEquals(3, personnes.size());
     }
 
     @Test
@@ -46,35 +50,33 @@ public class TestPersonne {
 
     @Test
     public void testDelete() {
-        Personne personne = new Personne("Durand", "Pierre");
-        personne.save();
-        personne.delete();
-        assertEquals(-1, personne.getId());
+        personne1.delete();
+        assertEquals(-1, personne1.getId());
     }
 
     @Test
-    public void testFind() throws SQLException {
-        Personne personne = new Personne("Durand", "Pierre");
-        personne.save();
-        Personne personne2 = Personne.findById(7);
-        assertEquals("Pierre", personne2.getPrenom());
+    public void testFindById() throws SQLException {
+        Personne personne2 = Personne.findById(2);
+        assertEquals("PierreA", personne2.getPrenom());
         assertEquals("Durand", personne2.getNom());
     }
 
     @Test
     public void testFindAll() throws SQLException {
-        Personne personne = new Personne("Durand", "Pierre");
-        personne.save();
+        ;
         List<Personne> p = Personne.findAll();
-        assertEquals(29, p.size());
+        assertEquals(2, p.size());
     }
 
     @Test
-    public void testFindAllByNom() throws SQLException {
-        Personne personne = new Personne("Durand", "Pierre");
-        personne.save();
+    public void testFindlByName() throws SQLException {
         List<Personne> p = Personne.findByName("Durand");
-        assertEquals(22, p.size());
+        assertEquals(2, p.size());
     }
-}
 
+    @AfterEach
+    public void AfterEach() {
+        Personne.deleteTable();
+    }
+
+}

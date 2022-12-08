@@ -31,6 +31,7 @@ public class Personne {
             String nom = rs.getString("nom");
             String prenom = rs.getString("prenom");
             Personne personne = new Personne(nom, prenom);
+            personne.id = rs.getInt(1);
             personnes.add(nb, personne);
             nb++;
 
@@ -53,6 +54,7 @@ public class Personne {
             String prenom = rs.getString("prenom");
             trouve = true;
             personne = new Personne(nom, prenom);
+            personne.id = rs.getInt(1);
         }
         if (!trouve) {
             return null;
@@ -76,6 +78,7 @@ public class Personne {
             String nomt = rs.getString("nom");
             String prenom = rs.getString("prenom");
             personne = new Personne(nomt, prenom);
+            personne.id = rs.getInt(1);
             personnes.add(nb, personne);
             nb++;
         }
@@ -86,7 +89,7 @@ public class Personne {
         try {
             Connection connect = DBConnection.getConnection();
             Statement stmt = connect.createStatement();
-            String createString = "CREATE TABLE Personne ( " + "ID INTEGER  AUTO_INCREMENT, "
+            String createString = "CREATE TABLE Personne ( " + "ID int  AUTO_INCREMENT, "
                     + "NOM varchar(40) NOT NULL, " + "PRENOM varchar(40) NOT NULL, " + "PRIMARY KEY (ID))";
             stmt.executeUpdate(createString);
             System.out.println("1) creation table Personne\n");
@@ -113,9 +116,12 @@ public class Personne {
         try {
             Connection connect = DBConnection.getConnection();
             Statement stmt = connect.createStatement();
-            String sql = "INSERT INTO Personne ( nom, prenom) VALUES ('" + this.nom + "', '" + this.prenom + "')";
-            stmt.executeUpdate(sql);
+            String sql = "INSERT INTO Personne ( nom, prenom) VALUES (" + " '" + this.nom + "', '" + this.prenom + "')";
+            stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
             System.out.println("Personne sauvegardee");
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            this.id = rs.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -143,17 +149,7 @@ public class Personne {
     public int getId() {
         return id;
     }
-    public int getMaxId() throws SQLException {
-        Connection connect = DBConnection.getConnection();
-        Statement stmt = connect.createStatement();
-        String sql = "SELECT MAX(id) FROM Personne";
-        ResultSet rs = stmt.executeQuery(sql);
-        int maxId = 0;
-        while (rs.next()) {
-            maxId = rs.getInt("MAX(id)");
-        }
-        return maxId;
-    }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
@@ -161,7 +157,7 @@ public class Personne {
         this.prenom = prenom;
     }
     public String getNom() {
-       return nom;
+        return nom;
     }
     public String getPrenom() {
         return this.prenom;
