@@ -10,13 +10,17 @@ public class TestFilm {
 
     @BeforeEach
     public void BeforeEach() throws SQLException, RealisateurAbsentException {
-        Film.deleteTable();
         Film.createTable();
-        Film film = new Film("Harry Potter à l'école des sorciers", new Personne("Chris", "Colombus", 1));
+        Personne.createTable();
+        Personne colombus = new Personne("Chris", "Colombus");
+        colombus.save();
+        Personne cuaron = new Personne("Alfonso", "Cuaron");
+        cuaron.save();
+        Film film = new Film("Harry Potter à l'école des sorciers", colombus);
         film.save();
-        Film film2 = new Film("Harry Potter et la chambre des secrets", new Personne("Chris", "Colombus", 1));
+        Film film2 = new Film("Harry Potter et la chambre des secrets", colombus);
         film2.save();
-        Film film3 = new Film("Harry Potter et le prisonnier d'Azkaban", new Personne("Alfonso", "Cuaron", 1));
+        Film film3 = new Film("Harry Potter et le prisonnier d'Azkaban", cuaron);
         film3.save();
     }
 
@@ -25,5 +29,6 @@ public class TestFilm {
     @AfterEach
     public void AfterEach() {
         Film.deleteTable();
+        Personne.deleteTable();
     }
 }

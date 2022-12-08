@@ -12,7 +12,7 @@ public class DBConnection {
     private String password;
     private String serverName;
     private String portNumber;
-    private String dbName;
+    private String dbName = "testpersonne";
     private static Connection connect;
     private Properties connectionProps;
     private DBConnection() throws SQLException {
@@ -20,7 +20,6 @@ public class DBConnection {
         password = "";
         serverName = "localhost";
         portNumber = "3306";
-        dbName = "testpersonne";
         connectionProps = new Properties();
         connectionProps.put("user", userName);
         connectionProps.put("password", password);
@@ -31,7 +30,7 @@ public class DBConnection {
 
 
     public static synchronized Connection getConnection() {
-        if (dbConnection == null) {
+        if (connect == null) {
             try {
                 dbConnection = new DBConnection();
             } catch (SQLException e) {
