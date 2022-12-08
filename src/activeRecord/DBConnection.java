@@ -40,8 +40,16 @@ public class DBConnection {
         return connect;
     }
 
+    public static DBConnection getDBConnection() {
+        return dbConnection;
+    }
+
     public void setNomDB(String nomDB){
         this.dbName = nomDB;
+    }
+
+    public String getNomDB() {
+        return this.dbName;
     }
 }
 

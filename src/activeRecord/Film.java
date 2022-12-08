@@ -1,9 +1,7 @@
 package activeRecord;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 //Chaque objet Film sera censé représenter un tuple de la classe Film selon le patron active record
@@ -88,17 +86,20 @@ public class Film {
     public void saveNew(){
         Connection connect = DBConnection.getConnection();
         try {
-            PreparedStatement prep1 = connect.prepareStatement("INSERT INTO Film (titre, id_rea) VALUES (?, ?);");
+            PreparedStatement prep1 = connect.prepareStatement("INSERT INTO Film (titre, id_rea) VALUES (?, ?);", Statement.RETURN_GENERATED_KEYS);
             prep1.setString(1, this.titre);
             prep1.setInt(2, this.id_real);
-            prep1.execute();
+            prep1.executeUpdate();
+            ResultSet rs = prep1.getGeneratedKeys();
+            rs.next();
+            this.id = rs.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public static List<Film> findByRealisateur(Personne p) throws SQLException {
-        List<Film> films = null;
+        List<Film> films = new ArrayList<Film>();
         Connection connect = DBConnection.getConnection();
         PreparedStatement prep1 = connect.prepareStatement("SELECT * FROM Film where id_rea=?");
         prep1.setInt(1, p.getId());
@@ -114,4 +115,15 @@ public class Film {
         return films;
     }
 
+    public String getTitre() {
+        return this.titre;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setTitre(String s) {
+        this.titre = s;
+    }
 }
