@@ -1,8 +1,8 @@
 package activeRecord;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Personne {
 
@@ -25,13 +25,14 @@ public class Personne {
         prep1.execute();
         ResultSet rs = prep1.getResultSet();
         // s'il y a un resultat
-        List<Personne> personnes = null;
+        List<Personne> personnes = new ArrayList<>();
+        int nb=0;
         while (rs.next()) {
             String nom = rs.getString("nom");
             String prenom = rs.getString("prenom");
-            int id = rs.getInt("id");
             Personne personne = new Personne(nom, prenom);
-            personnes = List.of(personne);
+            personnes.add(nb, personne);
+            nb++;
 
         }
         return personnes;
@@ -50,7 +51,6 @@ public class Personne {
         while (rs.next()) {
             String nom = rs.getString("nom");
             String prenom = rs.getString("prenom");
-            int id = rs.getInt("id");
             trouve = true;
             personne = new Personne(nom, prenom);
         }
@@ -70,13 +70,14 @@ public class Personne {
         ResultSet rs = prep1.getResultSet();
         // s'il y a un resultat
         Personne personne;
-        List<Personne> personnes = null;
+        List<Personne> personnes = new ArrayList<>();
+        int nb = 0;
         while (rs.next()) {
             String nomt = rs.getString("nom");
             String prenom = rs.getString("prenom");
-            int id = rs.getInt("id");
             personne = new Personne(nomt, prenom);
-            personnes = List.of(personne);
+            personnes.add(nb, personne);
+            nb++;
         }
         return personnes;
     }
@@ -90,7 +91,6 @@ public class Personne {
             stmt.executeUpdate(createString);
             System.out.println("1) creation table Personne\n");
         }catch (SQLException e) {
-            System.out.println("TA UN PUTAI N DE PROBLEME");
             e.printStackTrace();
         }
     }
