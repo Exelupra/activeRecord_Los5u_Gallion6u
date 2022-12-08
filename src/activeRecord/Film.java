@@ -24,7 +24,7 @@ public class Film {
         this.id_real = id_real;
         this.id = id;
     }
-    public Film findById(int id_recherche) throws SQLException {
+    public static Film findById(int id_recherche) throws SQLException {
         Connection connect = DBConnection.getConnection();
         PreparedStatement prep1 = connect.prepareStatement("SELECT * FROM Film where id=?");
         prep1.setInt(1, id_recherche);
@@ -41,8 +41,7 @@ public class Film {
     }
 
     public Personne getRealisateur() throws SQLException {
-        Personne realisateur = new Personne();
-        realisateur.findById(this.id_real);
+        Personne realisateur = Personne.findById(this.id_real);
         return realisateur;
     }
 
@@ -67,10 +66,13 @@ public class Film {
     }
 
     public void save() throws SQLException, RealisateurAbsentException {
-        if (this.id_real == -1){
+        if (this.id_real == -1) {
             throw new RealisateurAbsentException("Le realisateur n'est pas enregistre dans la base");
-        }else{
+        }
+        if (this.id == -1) {
             this.saveNew();
+        }else{
+            this.update();
         }
     }
 
@@ -95,7 +97,7 @@ public class Film {
         }
     }
 
-    public List<Film> findByRealisateur(Personne p) throws SQLException {
+    public static List<Film> findByRealisateur(Personne p) throws SQLException {
         List<Film> films = null;
         Connection connect = DBConnection.getConnection();
         PreparedStatement prep1 = connect.prepareStatement("SELECT * FROM Film where id_rea=?");
