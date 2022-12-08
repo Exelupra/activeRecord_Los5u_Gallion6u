@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class TestPersonne {
-
+//before each pour créer la table
     @BeforeEach
     public void BeforeEach() {
         Personne.createTable();
