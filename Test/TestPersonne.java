@@ -29,8 +29,8 @@ public class TestPersonne {
     }
 
     /**
-     * Test pour la methode save
-     * @throws SQLException
+     * Test pour la methode save quand la personne n'est pas enregistrée dans la base de données
+     * @throws SQLException quand la requete ne fonctionne pas
      */
     @Test
     public void testSave() throws SQLException {
@@ -68,7 +68,7 @@ public class TestPersonne {
 
     /**
      * Test pour la methode find by id
-     * @throws SQLException
+     * @throws SQLException quand la requete ne fonctionne pas
      */
     @Test
     public void testFindById() throws SQLException {
@@ -79,7 +79,7 @@ public class TestPersonne {
 
     /**
      * Test pour la methode find all
-     * @throws SQLException
+     * @throws SQLException quand la requete ne fonctionne pas
      */
     @Test
     public void testFindAll() throws SQLException {
@@ -90,7 +90,7 @@ public class TestPersonne {
 
     /**
      * Test pour la methode find by name
-     * @throws SQLException
+     * @throws SQLException quand la requete ne fonctionne pas
      */
     @Test
     public void testFindlByName() throws SQLException {

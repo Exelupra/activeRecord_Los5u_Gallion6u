@@ -12,8 +12,8 @@ public class Personne {
 
     /**
      * Constructeur de la classe Personne
-     * @param nom
-     * @param prenom
+     * @param nom nom de la personne
+     * @param prenom prenom de la personne
      */
     public Personne(String nom, String prenom) {
         this.nom = nom;
@@ -22,9 +22,9 @@ public class Personne {
     }
 
     /**
-     * Retourne la liste de toutes les personnes
-     * @return personnes
-     * @throws SQLException
+     * Retourne la liste de toutes les personnes dans la table Personne
+     * @return ArrayList<Personne> liste de toutes les personnes
+     * @throws SQLException quand la requete SQL est incorrecte
      */
     public static ArrayList<Personne> findAll() throws SQLException {
         Connection connect = DBConnection.getConnection();
@@ -51,9 +51,9 @@ public class Personne {
 
     /**
      * Retourne la personne à qui appartient l'id
-     * @param Id
-     * @return Personne
-     * @throws SQLException
+     * @param Id id de la personne recherchée
+     * @return Personne personne à qui appartient l'id
+     * @throws SQLException quand la requete SQL est incorrecte
      */
     public static Personne findById(int Id) throws SQLException {
         boolean trouve = false;
@@ -79,9 +79,9 @@ public class Personne {
 
     /**
      * Retourne la liste des personnes qui ont le nom passé en paramètre
-     * @param nom
-     * @return personnes
-     * @throws SQLException
+     * @param nom nom des personnes recherchées
+     * @return ArrayList<Personne> liste des personnes qui ont le nom passé en paramètre
+     * @throws SQLException quand la requete SQL est incorrecte
      */
     public static ArrayList<Personne> findByName(String nom) throws SQLException {
         Connection connect = DBConnection.getConnection();
@@ -138,7 +138,7 @@ public class Personne {
     }
 
     /**
-     * Insert la personne dans la base de données
+     * Insert une nouvelle personne dans la table Personne
      */
     public void saveNew() {
 
@@ -173,7 +173,8 @@ public class Personne {
     }
 
     /**
-     * Permet d'utiliser la methode dans les deux cas d'utilisation
+     * permet d'enregistrer une nouvelle personne
+     * ou de modifier les informations d'une personne deja presente dans la base de donnees
      */
     public void save() {
         if (this.id == -1) {
@@ -184,40 +185,40 @@ public class Personne {
     }
 
     /**
-     * retourne id
-     * @return int
+     * getter qui renvoie l'id de la personne
+     * @return int id de la personne
      */
     public int getId() {
         return id;
     }
 
     /**
-     * modifie le nom
-     * @param nom
+     * setter qui modifie le nom de la personne
+     * @param nom nouveau nom de la personne
      */
     public void setNom(String nom) {
         this.nom = nom;
     }
 
     /**
-     * modifie le prenom
-     * @param prenom
+     * setter qui modifie le prenom de la personne
+     * @param prenom nouveau prenom de la personne
      */
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
 
     /**
-     * retourne le nom
-     * @return String
+     * getter qui renvoie le nom de la personne
+     * @return String nom de la personne
      */
     public String getNom() {
         return nom;
     }
 
     /**
-     * retourne le prenom
-     * @return
+     * getter qui renvoie le prenom de la personne
+     * @return String prenom de la personne
      */
     public String getPrenom() {
         return this.prenom;
