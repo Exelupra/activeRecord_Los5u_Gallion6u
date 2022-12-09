@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class TestPersonne {
-//before each pour crÃ©er la table
+//before each pour créer la table
 
     Personne personne1;
     Personne personne2;
