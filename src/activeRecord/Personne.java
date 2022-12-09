@@ -23,10 +23,10 @@ public class Personne {
 
     /**
      * Retourne la liste de toutes les personnes
-     * @return List<Personne>
+     * @return personnes
      * @throws SQLException
      */
-    public static List<Personne> findAll() throws SQLException {
+    public static ArrayList<Personne> findAll() throws SQLException {
         Connection connect = DBConnection.getConnection();
 
         String SQLPrep = "SELECT * FROM Personne;";
@@ -34,7 +34,7 @@ public class Personne {
         prep1.execute();
         ResultSet rs = prep1.getResultSet();
         // s'il y a un resultat
-        List<Personne> personnes = new ArrayList<>();
+        ArrayList<Personne> personnes = new ArrayList<>();
         int nb=0;
         while (rs.next()) {
             String nom = rs.getString("nom");
@@ -80,10 +80,10 @@ public class Personne {
     /**
      * Retourne la liste des personnes qui ont le nom passé en paramètre
      * @param nom
-     * @return List<Personne>
+     * @return personnes
      * @throws SQLException
      */
-    public static List<Personne> findByName(String nom) throws SQLException {
+    public static ArrayList<Personne> findByName(String nom) throws SQLException {
         Connection connect = DBConnection.getConnection();
 
         PreparedStatement prep1 = connect.prepareStatement("SELECT * FROM Personne where nom=?");
@@ -92,7 +92,7 @@ public class Personne {
         ResultSet rs = prep1.getResultSet();
         // s'il y a un resultat
         Personne personne;
-        List<Personne> personnes = new ArrayList<>();
+        ArrayList<Personne> personnes = new ArrayList<>();
         int nb = 0;
         while (rs.next()) {
             String nomt = rs.getString("nom");
